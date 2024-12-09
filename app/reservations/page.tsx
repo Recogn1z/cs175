@@ -28,7 +28,7 @@ export default function ReservationsPage() {
 
   const handleCancel = (id: string) => {
     if (reservations.cancel(id)) {
-      setUserReservations(prev => prev.filter(r => r.id !== id));
+      setUserReservations((prev) => prev.filter((r) => r.id !== id));
       toast({
         title: "Reservation cancelled",
         description: "Your reservation has been cancelled successfully",
@@ -36,50 +36,38 @@ export default function ReservationsPage() {
     }
   };
 
-  if (!user) return null;
+  const handleDetail = () => {
+    router.push("/reservations/detail");
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="container mx-auto px-4 py-12">
-        <Header />
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">My Reservations</h2>
-        
-        {userReservations.length === 0 ? (
-          <Card className="p-6">
-            <p className="text-gray-600">You don't have any reservations yet.</p>
+    <main className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      <Header />
+      <div className="container mx-auto p-4">
+        {userReservations.map((reservation) => (
+          <Card key={reservation.id} className="mb-4">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-xl font-bold">
+                  {services.find((s) => s.id === reservation.service)?.name}
+                </h2>
+                <p>{format(new Date(reservation.date), "PPpp")}</p>
+              </div>
+              <div className="space-x-2">
+                <Button variant="outline" onClick={handleDetail}>
+                  Detail
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => handleCancel(reservation.id)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
           </Card>
-        ) : (
-          <div className="grid gap-6">
-            {userReservations.map(reservation => {
-              const service = services.find(s => s.id === reservation.service);
-              return (
-                <Card key={reservation.id} className="p-6">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {service?.name}
-                      </h3>
-                      <p className="text-gray-600">
-                        {format(new Date(reservation.date), "MMMM d, yyyy")} at{" "}
-                        {reservation.time}
-                      </p>
-                      <p className="text-green-600 font-semibold mt-2">
-                        ${service?.price}
-                      </p>
-                    </div>
-                    <Button
-                      variant="destructive"
-                      onClick={() => handleCancel(reservation.id)}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-        )}
+        ))}
       </div>
-    </div>
+    </main>
   );
 }

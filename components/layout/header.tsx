@@ -4,9 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Leaf } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
+import { useRouter, usePathname } from "next/navigation";
 
 export function Header() {
   const { user, logout } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleNavigation = () => {
+    if (pathname === "/reservations") {
+      router.push("/");
+    } else {
+      router.push("/reservations");
+    }
+  };
 
   return (
     <div className="flex items-center justify-between mb-16">
@@ -20,6 +30,9 @@ export function Header() {
             <span className="text-gray-600">Welcome, {user.username}!</span>
             <Button variant="ghost" onClick={logout}>
               Logout
+            </Button>
+            <Button variant="ghost" onClick={handleNavigation}>
+              {pathname === "/reservations" ? "Home" : "Check Reservations"}
             </Button>
           </>
         ) : (

@@ -27,14 +27,14 @@ export default function Home() {
   const { user } = useAuth();
   const { toast } = useToast();
 
-  const selectedService = services.find(s => s.id === service);
+  const selectedService = services.find((s) => s.id === service);
 
   const handleReservation = () => {
     if (!user) {
       toast({
         title: "Authentication required",
         description: "Please login to make a reservation",
-        variant: "destructive"
+        variant: "destructive",
       });
       router.push("/login");
       return;
@@ -44,7 +44,7 @@ export default function Home() {
       toast({
         title: "Incomplete form",
         description: "Please select all required fields",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
@@ -53,7 +53,7 @@ export default function Home() {
       date,
       time: selectedTime,
       service,
-      username: user.username
+      username: user.username,
     });
 
     toast({
@@ -65,7 +65,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <main className="min-h-screen bg-gradient-to-b from-green-50 to-white ">
       <div className="container mx-auto px-4 py-12">
         <Header />
         <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -84,7 +84,7 @@ export default function Home() {
                   <SelectValue placeholder="Choose a service" />
                 </SelectTrigger>
                 <SelectContent>
-                  {services.map(service => (
+                  {services.map((service) => (
                     <SelectItem key={service.id} value={service.id}>
                       <div className="flex justify-between items-center w-full">
                         <span>{service.name}</span>
@@ -100,8 +100,8 @@ export default function Home() {
                 </p>
               )}
             </Card>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-green-600 hover:bg-green-700"
               onClick={handleReservation}
               disabled={!date || !selectedTime || !service}
