@@ -88,7 +88,9 @@ export default function Home() {
                     <SelectItem key={service.id} value={service.id}>
                       <div className="flex justify-between items-center w-full">
                         <span>{service.name}</span>
-                        <span className="text-green-600">${service.price}</span>
+                        <span className="text-green-600">
+                          ${service.price}/hour
+                        </span>
                       </div>
                     </SelectItem>
                   ))}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const StarRating = ({
   rating,
@@ -42,6 +43,7 @@ const StarRating = ({
 
 export default function ReservationDetailPage() {
   const { toast } = useToast();
+  const router = useRouter();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
@@ -63,6 +65,7 @@ export default function ReservationDetailPage() {
       title: "Submitted",
       description: "Your comment and rating have been submitted",
     });
+    router.push("/");
   };
 
   return (
@@ -71,7 +74,7 @@ export default function ReservationDetailPage() {
         <h1 className="text-2xl font-bold mb-4">Reservation Detail</h1>
         <div className="mb-4">
           <video controls className="w-full">
-            <source src="/path/to/demo-video.mp4" type="video/mp4" />
+            <source src="/demo.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
